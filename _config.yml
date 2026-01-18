@@ -23,13 +23,13 @@ repository               : "academicpages/academicpages.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "Mingjun.png"
   name             : "MJ"
-  pronouns         : "he/his"  
+  pronouns         : "He/His"  
   bio              : "简短的介绍..."
   location         : "China"
   employer         : "GXUFL"
-  uri              : # URL
+  uri              : https://jackk996.github.io/
   email            : "none@example.org" 
 
   # Academic websites
