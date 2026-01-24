@@ -13,4 +13,4 @@ Hi there!u
 
 📖News
 ======
--2025.12 Through the certification process, I obtained the title of lecturer.
+- 2025.12 Through the certification process, I obtained the title of lecturer.
