@@ -94,3 +94,53 @@ Unfortunately, one logistical issue with a template theme like Academic Pages th
 [![GitHub stars](https://img.shields.io/github/stars/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io)
 [![GitHub forks](https://img.shields.io/github/forks/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io/fork)
 </div>
+
+## Risk Warning Experiment Framework
+
+This repository now includes an auditable Python/TensorFlow framework for the study "基于多源数据融合的软件信息化项目风险智能预警与动态管控研究". The repository audit found no real project-risk dataset, so numerical paper reproduction is not currently verifiable. Synthetic data utilities are included only for tests and pipeline demonstrations and are labelled `synthetic_demo`.
+
+### Environment
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Data placement
+
+Place the real monthly subsystem risk table at:
+
+```bash
+data/raw/risk_records.csv
+```
+
+Use `data/template_risk_records.csv` as the required header template. See `DATA_REQUIRED.md` for exact reproduction requirements.
+
+### Validate and prepare data
+
+```bash
+python scripts/prepare_data.py --input data/raw/risk_records.csv --output data/processed/risk_records.csv
+```
+
+For a pipeline-only demo:
+
+```bash
+python scripts/prepare_data.py --synthetic-demo --output data/processed/synthetic_demo.csv
+```
+
+### Run experiments
+
+```bash
+python scripts/run_all_experiments.py --config configs/strict_paper.yaml
+python scripts/run_all_experiments.py --config configs/corrected.yaml
+```
+
+### Train, search, explain, and report
+
+```bash
+python scripts/train_main.py --config configs/corrected.yaml
+python scripts/run_grid_search.py
+python scripts/generate_report.py
+python -m pytest tests
+```

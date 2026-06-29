@@ -1,0 +1,10 @@
+def build_bp_model(window_size=6,n_features=4,dropout=0.2,learning_rate=0.001):
+ import tensorflow as tf; inp=tf.keras.Input(shape=(window_size,n_features)); x=tf.keras.layers.Flatten()(inp); x=tf.keras.layers.Dense(64,activation='relu')(x); x=tf.keras.layers.Dropout(dropout)(x); out=tf.keras.layers.Dense(1,activation='sigmoid')(x); m=tf.keras.Model(inp,out); m.compile(tf.keras.optimizers.Adam(learning_rate),'mse'); return m
+def build_lstm_model(window_size=6,n_features=4,units=64,layers=1,dropout=0.2,learning_rate=0.001):
+ import tensorflow as tf; inp=tf.keras.Input(shape=(window_size,n_features)); x=inp
+ for i in range(layers): x=tf.keras.layers.LSTM(units, return_sequences=i<layers-1)(x)
+ x=tf.keras.layers.Dropout(dropout)(x); out=tf.keras.layers.Dense(1,activation='sigmoid')(x); m=tf.keras.Model(inp,out); m.compile(tf.keras.optimizers.Adam(learning_rate),'mse'); return m
+def build_lstm_am_model(window_size=6,n_features=4,units=64,dropout=0.2,learning_rate=0.001):
+ import tensorflow as tf; inp=tf.keras.Input(shape=(window_size,n_features)); h=tf.keras.layers.LSTM(units, return_sequences=True)(inp); h=tf.keras.layers.Dropout(dropout)(h); score=tf.keras.layers.Dense(1,activation='tanh')(h); att=tf.keras.layers.Softmax(axis=1)(score); ctx=tf.keras.layers.Lambda(lambda z: tf.reduce_sum(z[0]*z[1],axis=1))([h,att]); out=tf.keras.layers.Dense(1,activation='sigmoid')(ctx); m=tf.keras.Model(inp,out); m.compile(tf.keras.optimizers.Adam(learning_rate),'mse'); return m
+def build_lstm_sa_model(window_size=6,n_features=4,units=64,dropout=0.2,learning_rate=0.001):
+ import tensorflow as tf; inp=tf.keras.Input(shape=(window_size,n_features)); h=tf.keras.layers.LSTM(units, return_sequences=True)(inp); h=tf.keras.layers.Dropout(dropout)(h); att=tf.keras.layers.Attention(use_scale=True)([h,h]); pooled=tf.keras.layers.GlobalAveragePooling1D()(att); out=tf.keras.layers.Dense(1,activation='sigmoid')(pooled); m=tf.keras.Model(inp,out); m.compile(tf.keras.optimizers.Adam(learning_rate),'mse'); return m
