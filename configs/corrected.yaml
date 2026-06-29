@@ -1,0 +1,9 @@
+mode: corrected
+data_path: data/raw/risk_records.csv
+output_root: outputs
+synthetic_demo: false
+split: {train_start: '2020-01', train_end: '2023-07', val_start: '2023-08', val_end: '2024-09', test_start: '2024-10', test_end: '2025-12'}
+pca: {alpha: 0.03, variance_threshold: 0.85, n_components: null}
+model: {window_size: 6, n_features: 4, lstm_units: 64, lstm_layers: 1, d_k: 64, dropout: 0.2, learning_rate: 0.001, batch_size: 16, epochs: 200, early_stopping_patience: 20, restore_best_weights: true}
+seeds: [1,2,3,4,5]
+metrics: {mape: safe_mape, epsilon: 1.0e-6}
